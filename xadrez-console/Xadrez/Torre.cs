@@ -1,10 +1,11 @@
 ﻿using tabuleiro;
 
+
 namespace xadrez
 {
     class Torre : Peca
     {
-        public Torre(Tabuleiro tab, Cor cor) : base(cor, tab)
+        public Torre(Tabuleiro tab, Cor cor) : base(tab, cor)
         {
         }
 
@@ -18,14 +19,14 @@ namespace xadrez
             Peca p = tab.peca(pos);
             return p == null || p.cor != cor;
         }
+
         public override bool[,] movimentosPossiveis()
         {
             bool[,] mat = new bool[tab.linhas, tab.colunas];
 
-            //apenas instanciando a posição
             Posicao pos = new Posicao(0, 0);
 
-            // se possivel movimentar acima
+            // acima
             pos.definirValores(posicao.linha - 1, posicao.coluna);
             while(tab.posicaoValida(pos) && podeMover(pos))
             {
@@ -34,9 +35,10 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.linha -= 1;
+                pos.linha = pos.linha - 1;
             }
-            // se possivel movimentar abaixo
+
+            // abaixo
             pos.definirValores(posicao.linha + 1, posicao.coluna);
             while(tab.posicaoValida(pos) && podeMover(pos))
             {
@@ -45,10 +47,11 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.linha += 1;
+                pos.linha = pos.linha + 1;
             }
-            // se possivel movimentar direita
-            pos.definirValores(posicao.linha, posicao.coluna +1);
+
+            // direita
+            pos.definirValores(posicao.linha, posicao.coluna + 1);
             while(tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -56,9 +59,10 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.coluna += 1;
+                pos.coluna = pos.coluna + 1;
             }
-            // se possivel movimentar direita
+
+            // esquerda
             pos.definirValores(posicao.linha, posicao.coluna - 1);
             while(tab.posicaoValida(pos) && podeMover(pos))
             {
@@ -67,8 +71,9 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.coluna -= 1;
+                pos.coluna = pos.coluna - 1;
             }
+
             return mat;
         }
     }
